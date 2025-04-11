@@ -1,0 +1,13 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  className: string;
+}
+
+const { src, alt, className } = Astro.props;
+
+const currentImage = `/images/vehicles/${src}`;
+---
+
+<img src={currentImage} alt={alt} class:list={[className]} />

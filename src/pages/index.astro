@@ -1,11 +1,20 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { actions } from "astro:actions";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { ProductList } from "@/components";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const searchParams = Astro.url.searchParams;
+
+const { data, error } = await actions.getProducts();
+
+if (error) {
+  return Astro.redirect("/");
+}
+
+const { products } = data;
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout>
+  <h1 class="text-3xl text-center my-4">Luxury Cars</h1>
+  <ProductList products={products} client:idle />
+</MainLayout>

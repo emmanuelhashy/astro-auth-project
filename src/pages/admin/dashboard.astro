@@ -1,0 +1,66 @@
+---
+import { actions } from "astro:actions";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Formatter } from "@/utils";
+import ProductImage from "@/components/products/ProductImage.astro";
+
+const searchParams = Astro.url.searchParams;
+const pageParam = Number(searchParams.get("page") ?? 1);
+
+const { data, error } = await actions.getProducts({
+  page: pageParam,
+});
+
+if (error) {
+  return Astro.redirect("/");
+}
+
+const { products } = data;
+console.log(products);
+---
+
+<MainLayout title="Panel administrativo">
+  <h1>Dashboard</h1>
+  <p>Product List</p>
+  <table class="w-full mt-5">
+    <thead>
+      <tr>
+        <th class="text-left">Image</th>
+        <th class="text-left">Title</th>
+        <th class="text-left">Daily Charges</th>
+        <th class="text-left">Inventory</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        products.map((product) => (
+          <tr>
+            <td>
+              {
+                product.images.length > 0 ? (
+                  <ProductImage 
+                      src={product.images.split(',')[0]}
+                      alt={product.name}
+                      className="w-16 h-16"
+                  />
+                ) : (
+                  <img src=`/images/products/no-image.png` alt="No image">
+                )
+              }
+            </td>
+            <td>
+              <a
+                class="hover:underline cursor-pointer"
+                href={`/admin/products/${product.slug}`}
+              >
+                {product.name}
+              </a>
+            </td>
+            <td>{Formatter.currency(product.price)}</td>
+            <td class="justify-end">{product.stock}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</MainLayout>

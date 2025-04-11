@@ -1,0 +1,31 @@
+---
+
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Auth</title>
+  </head>
+  <body>
+    <!-- component -->
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <div
+      class=" relative"
+    >
+      <div
+        class="absolute bg-gradient-to-b from-black to-black opacity-75 inset-0 z-0"
+      >
+      </div>
+      <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
+        <slot />
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+---
+import ProductSlideShow from "@/components/products/ProductSlideShow.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Formatter } from "@/utils";
+import { actions } from "astro:actions";
+
+const { slug } = Astro.params;
+
+const { data, error } = await actions.getProductBySlug(slug ?? "");
+
+if (error) return Astro.redirect("/404");
+
+const { product, images } = data;
+
+const image = images[0].image.startsWith("http")
+  ? images[0].image
+  : `${import.meta.env.PUBLIC_URL}/images/vehicles/${images[0].image}`;
+---
+
+<MainLayout
+  title={product.name}
+  description={product.description}
+  image={image}
+>
+  <div>
+    <h2 class="text-2xl mt-4 font-bold">{product.name}</h2>
+    <ProductSlideShow images={images.map((i) => i.image)} />
+      <section class="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
+        <div class="space-y-4">
+          <div>
+            <p class="mb-1 font-semibold">Tags</p>
+            {(Array.isArray(product.tags) 
+              ? product.tags 
+              : product.tags.split(","))
+              .map((tag) => (
+                <span
+                  class="bg-black text-white text-sm py-1.5 px-2 capitalize rounded-md mr-2 mb-2"
+                
+                >
+                  {tag}
+                </span>
+              ))
+            }
+          </div>
+          <p class="font-medium">Daily Charges: <span class="font-bold text-2xl">{Formatter.currency(product.price)}</span></h2>
+    
+          <p class="text-lg">Brand: <span class="bg-black text-sm text-white py-1.5 px-3 rounded-md">{product.brand}</span></h3>
+            <div>
+              <h3 class="mt-5">Description</h3>
+              <p>{product.description}</p>
+            </div>
+          </div>
+  <div>
+    <h3 class="mt-5">Quantity</h3>
+        <div>
+          <button class="btn-quantity">-</button>
+          <input type="number" min="1" value="1" />
+          <button class="btn-quantity">+</button>
+        </div>
+        <button
+          class="mt-5 bg-black text-white p-3 w-full disabled:bg-gray-500"
+          >Proceed to Rent</button
+        >
+  </div>
+        
+      </section>
+
+  </div>
+
+  <input type="hidden" id="product-id" value={product.id} />
+</MainLayout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+
+    const quantityInput = document.querySelector("input") as HTMLInputElement;
+
+    let quantity = 1;
+
+    const [decrementButton, incrementButton, addToCardButton] =
+      document.querySelectorAll("button");
+
+    if (!incrementButton || !quantityInput) return;
+
+    incrementButton.addEventListener("click", () => {
+      quantity = Math.min(quantity + 1, 5);
+      quantityInput.value = quantity.toString();
+    });
+
+    decrementButton.addEventListener("click", () => {
+      quantity = Math.max(quantity - 1, 1);
+      quantityInput.value = quantity.toString();
+    });
+  });
+</script>
+
+<style>
+  h3 {
+    @apply font-bold;
+  }
+
+  li {
+    @apply hover:underline cursor-pointer;
+  }
+
+  .btn-quantity {
+    @apply w-10 text-center p-2 border border-gray-300 hover:bg-gray-100 cursor-pointer;
+  }
+
+  input {
+    @apply w-16 text-center p-2 border border-gray-300;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+</style>
