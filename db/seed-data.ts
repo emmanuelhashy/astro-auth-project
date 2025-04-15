@@ -36,5 +36,17 @@ export const seedVehicles: SeedVehicle[] = [
     type: 'COUPE',
     tags: ['SUV', 'luxury car', 'modern design']
   },
+  {
+    description:
+      'Front view of a vibrant orange sports car with sharp LED headlights, bold grille, and dramatic lighting in a dark setting.',
+    images: ['nissan_sport_1.jpeg', 'nissan_sport_2.jpeg'],
+    stock: 6,
+    price: 1200,
+    brand: 'Nissan',
+    slug: 'nissan_sport_car',
+    name: 'Nissan Sport Car',
+    type: 'SPORTS CAR',
+    tags: ['aerodynamics', 'sports', 'speed']
+  },
 ]
 

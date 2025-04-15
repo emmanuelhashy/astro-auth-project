@@ -1,6 +1,6 @@
-import { defineAction, z } from 'astro:actions';
+import { defineAction} from 'astro:actions';
+import { z } from "astro:schema";
 import { db, User } from 'astro:db';
-import { signIn } from 'auth-astro/client';
 import bcrypt from "bcryptjs";
 
 export const registerUser = defineAction({
@@ -17,17 +17,7 @@ export const registerUser = defineAction({
       password: bcrypt.hashSync(password),
       role: "user",
     }
-    const isCreated = await db.insert(User).values([user]);
-    if (!isCreated) {
-      const resp = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      if (resp) {
-        return resp;
-      }
-    };
+    await db.insert(User).values([user]);
     return { ok: true };
   },
 });

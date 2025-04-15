@@ -1,4 +1,5 @@
-import { defineAction, z } from "astro:actions";
+import { defineAction } from "astro:actions";
+import { z } from "astro:schema";
 import { Product, db, eq, ProductImage } from "astro:db";
 import { getSession } from "auth-astro/server";
 import { v4 as UUID } from "uuid";
@@ -16,11 +17,11 @@ export const updateProduct = defineAction({
     name: z.string(),
     type: z.string(),
   }),
-  handler: async (form, { request }) => {
+  handler: async (form, { locals, request }) => {
     const session = await getSession(request);
     const user = session?.user;
-
-    if (!user) {
+    const { isAdmin } = locals;
+    if (!user && !isAdmin) {
       throw new Error("Unauthorized");
     }
 
@@ -29,7 +30,7 @@ export const updateProduct = defineAction({
 
     const product = {
       id: id,
-      user: user.id!,
+      user: user?.id!,
       ...rest,
     };
         await db.update(Product).set(product).where(eq(Product.id, id))

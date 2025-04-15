@@ -1,4 +1,4 @@
-import { logout, registerUser } from "./auth";
+import { registerUser } from "./auth";
 import {
   updateProduct,
   getProductBySlug,
@@ -6,7 +6,6 @@ import {
 } from "./products";
 
 export const server = {
-  logout,
   registerUser,
 
   getProducts,

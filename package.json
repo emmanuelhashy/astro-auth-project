@@ -1,37 +1,28 @@
 {
-  "name": "autorentals",
+  "name": "squealing-shepherd",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.1",
-    "@astrojs/db": "^0.12.0",
-    "@astrojs/netlify": "^5.4.0",
-    "@astrojs/react": "^3.6.1",
-    "@astrojs/tailwind": "^5.1.0",
-    "@auth/core": "^0.32.0",
-    "astro": "^4.13.0",
-    "auth-astro": "^4.1.2",
-    "bcryptjs": "^2.4.3",
-    "js-cookie": "^3.0.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "swiper": "^11.1.9",
-    "tailwindcss": "^3.4.7",
-    "typescript": "^5.5.4",
-    "uuid": "^10.0.0"
-  },
-  "devDependencies": {
+    "@astrojs/db": "^0.14.11",
+    "@astrojs/netlify": "^6.2.6",
+    "@astrojs/react": "^4.2.4",
+    "@auth/core": "^0.37.4",
+    "@tailwindcss/vite": "^4.1.4",
     "@types/bcryptjs": "^2.4.6",
-    "@types/js-cookie": "^3.0.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@types/uuid": "^10.0.0"
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "astro": "^5.6.2",
+    "auth-astro": "^4.2.0",
+    "bcryptjs": "^3.0.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.4",
+    "uuid": "^11.1.0"
   }
 }

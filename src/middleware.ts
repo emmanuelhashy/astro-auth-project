@@ -5,6 +5,7 @@ const notAuthenticatedRoutes = ["/login", "/register"];
 
 export const onRequest = defineMiddleware(
   async ({ url, locals, redirect, request }, next) => {
+    console.log("Middleware triggered");
     const session = await getSession(request);
     const isLoggedIn = !!session;
     const user = session?.user;
@@ -22,7 +23,7 @@ export const onRequest = defineMiddleware(
       locals.isAdmin = user.role === "admin";
     }
 
-    if (!locals.isAdmin && url.pathname.startsWith("/dashboard")) {
+    if (!locals.isAdmin && url.pathname.startsWith("/admin")) {
       return redirect("/");
     }
 

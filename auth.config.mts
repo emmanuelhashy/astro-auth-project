@@ -8,8 +8,8 @@ export default defineConfig({
   providers: [
     Credentials({
       credentials: {
-        email: { label: "Mail", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: "email", type: "email" },
+        password: { label: "password", type: "password" },
       },
       authorize: async ({ email, password }) => {
         const [user] = await db

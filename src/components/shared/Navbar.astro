@@ -1,7 +1,6 @@
 ---
 const { isLoggedIn, isAdmin, user } = Astro.locals;
 ---
-
 <!-- component -->
 <nav
   class="flex justify-between px-20 py-10 items-center fixed top-0 w-full z-10 h-20"
@@ -12,7 +11,6 @@ const { isLoggedIn, isAdmin, user } = Astro.locals;
   </h1>
   <div class="flex items-center">
     <ul class="flex items-center space-x-6">
-
       <li class="font-semibold text-white">
         <p>{user && user.email}</p>
       </li>

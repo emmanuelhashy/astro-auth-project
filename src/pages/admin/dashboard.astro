@@ -2,26 +2,20 @@
 import { actions } from "astro:actions";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Formatter } from "@/utils";
-import ProductImage from "@/components/products/ProductImage.astro";
 
-const searchParams = Astro.url.searchParams;
-const pageParam = Number(searchParams.get("page") ?? 1);
 
-const { data, error } = await actions.getProducts({
-  page: pageParam,
-});
+const { data, error } = await Astro.callAction(actions.getProducts, {});
 
 if (error) {
   return Astro.redirect("/");
 }
 
 const { products } = data;
-console.log(products);
 ---
 
-<MainLayout title="Panel administrativo">
-  <h1>Dashboard</h1>
-  <p>Product List</p>
+<MainLayout title="Admin Dashboard" description="Admin Dashboard">
+  <h1 class="font-bold text-2xl">Dashboard</h1>
+  <p class="font-semibold text-lg">Product List</p>
   <table class="w-full mt-5">
     <thead>
       <tr>
@@ -38,10 +32,10 @@ console.log(products);
             <td>
               {
                 product.images.length > 0 ? (
-                  <ProductImage 
-                      src={product.images.split(',')[0]}
+                  <img
+                      src={`/images/vehicles/${product.images.split(',')[0]}`}
                       alt={product.name}
-                      className="w-16 h-16"
+                      class="w-16 h-16 mb-2"
                   />
                 ) : (
                   <img src=`/images/products/no-image.png` alt="No image">
